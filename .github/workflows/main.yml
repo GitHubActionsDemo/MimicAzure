@@ -9,9 +9,13 @@ jobs:
  
   runs-on: [self-hosted, windows, x64]
   
+  environment: Dev
+  
   steps:
       
     - uses: actions/checkout@v3
+    
+    - uses: ./.github/workflows/ReplaceTokens.yml
     
     - uses: actions/upload-artifact@v3.1.2
       with:
@@ -24,14 +28,12 @@ jobs:
   
   runs-on: [self-hosted, windows, x64]
   
-  environment: Dev
      
   steps:
       
     - shell: cmd 
       run: mkdir Downloads
       
-    - uses: ./.github/workflows/ReplaceTokens.yml
       
     - uses: actions/download-artifact@v3.0.2
       with:
