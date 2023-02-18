@@ -1,0 +1,19 @@
+name: Replace tokens
+
+on:
+ workflow_call
+
+jobs:
+ 
+ ReplaceVariables:
+
+  runs-on: [self-hosted, windows, x64]
+  
+  steps:
+  
+  - name: Replace tokens
+    uses: cschleiden/replace-tokens@v1.2
+    with: 
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: 'MyArtifacts/Artifactone'
