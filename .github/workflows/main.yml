@@ -31,7 +31,7 @@ jobs:
     - shell: cmd 
       run: mkdir Downloads
       
-    - uses: ./.github/workflows/ReplaceTokens
+    - uses: ./.github/workflows/ReplaceTokens.yml
       
     - uses: actions/download-artifact@v3.0.2
       with:
