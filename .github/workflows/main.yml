@@ -29,9 +29,19 @@ jobs:
      #tokenSuffix: '}}'
      #files: 'MyArtifacts/Artifactone'
      
-    uses: falnyr/replace-env-vars-action@v1.3.2
+    #uses: falnyr/replace-env-vars-action@v1.3.2
+    #with:
+     #filename: MyArtifacts/Artifactone
+     
+  
+    uses: 4lch4/replace-tokens@v1.1.0
     with:
-     filename: MyArtifacts/Artifactone
+    
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: MyArtifacts/Artifactone
+      
+      
      
        
  DownloadArtifacts:
