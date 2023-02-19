@@ -23,11 +23,15 @@ jobs:
   steps:
   
   - name: Replace tokens
-    uses: cschleiden/replace-tokens@v1.2
-    with: 
-     tokenPrefix: '{{'
-     tokenSuffix: '}}'
-     files: 'MyArtifacts/Artifactone'
+    #uses: cschleiden/replace-tokens@v1.2
+    #with: 
+     #tokenPrefix: '{{'
+     #tokenSuffix: '}}'
+     #files: 'MyArtifacts/Artifactone'
+     
+    uses: falnyr/replace-env-vars-action@v1.3.2
+    with:
+     filename: MyArtifacts/Artifactone
 
  
  UploadArtifacts:
