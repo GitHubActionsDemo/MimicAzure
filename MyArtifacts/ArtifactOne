@@ -11,3 +11,8 @@ _Age_
 _Status_
 _Profession_
 _University_
+
+"${Name}"
+"${Age}"
+"${Profession}"
+"${Name}"
