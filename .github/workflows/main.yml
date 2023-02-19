@@ -41,18 +41,18 @@ jobs:
      #filename: MyArtifacts/Artifactone
      
   #functionNumber3
-    #uses: 4lch4/replace-tokens@v1.1.0
-    #with:
-    
-     #tokenPrefix: '{{'
-     #tokenSuffix: '}}'
-     #files: MyArtifacts/Artifactone
-     
-   #functionNumber4
-    uses: sandersaares-actions/expand-tokens@2020-01-28
+    uses: 4lch4/replace-tokens@v1.1.0
     with:
+    
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: MyArtifacts/Artifactone
+     
+   #functionNumber4(Linux)
+    #uses: sandersaares-actions/expand-tokens@2020-01-28
+    #with:
     # Path to the file or directory to process.
-     path: MyArtifacts/Artifactone
+    # path: MyArtifacts/Artifactone
      
      
    #functionNumber5
