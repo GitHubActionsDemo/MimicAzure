@@ -36,17 +36,17 @@ jobs:
      #files: 'MyArtifacts/Artifactone'
      
     #functionNumber2
-    #uses: falnyr/replace-env-vars-action@v1.3.2
-    #with:
-     #filename: MyArtifacts/Artifactone
+    uses: falnyr/replace-env-vars-action@v1.3.2
+    with:
+     filename: MyArtifacts/Artifactone
      
   #functionNumber3
-    uses: 4lch4/replace-tokens@v1.1.0
-    with:
+    #uses: 4lch4/replace-tokens@v1.1.0
+    #with:
     
-     tokenPrefix: '{{'
-     tokenSuffix: '}}'
-     files: MyArtifacts/Artifactone
+     #tokenPrefix: '{{'
+     #tokenSuffix: '}}'
+     #files: MyArtifacts/Artifactone
      
    #functionNumber4(Linux)
     #uses: sandersaares-actions/expand-tokens@2020-01-28
