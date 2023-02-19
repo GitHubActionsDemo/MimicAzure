@@ -32,23 +32,11 @@ jobs:
     uses: falnyr/replace-env-vars-action@v1.3.2
     with:
      filename: MyArtifacts/Artifactone
-
- 
- UploadArtifacts:
-
-  needs: ReplaceTokens
-  runs-on: [self-hosted, windows, x64]
-  steps:
-    
-    - uses: actions/upload-artifact@v3.1.2
-      with:
-       name: Artifacts
-       path: MyArtifacts/
-       
+     
        
  DownloadArtifacts:
  
-  needs: UploadArtifacts
+  needs: ReplaceTokens
   runs-on: [self-hosted, windows, x64] 
   steps:
       
