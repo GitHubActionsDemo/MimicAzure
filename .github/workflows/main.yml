@@ -42,8 +42,16 @@ jobs:
      #files: MyArtifacts/Artifactone
      
    
-    uses: sandersaares-actions/expand-tokens@2020-01-28
-    with:
+    #uses: sandersaares-actions/expand-tokens@2020-01-28
+    #with:
     # Path to the file or directory to process.
-     path: MyArtifacts/Artifactone
+     #path: MyArtifacts/Artifactone
+     
+     
+   
+    uses: nightstory/replace-env@v1
+    with:
+    # Input file path
+     input_file: MyArtifacts/Artifactone
+    
     
