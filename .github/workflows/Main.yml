@@ -42,4 +42,25 @@ jobs:
     target: [Dev, QA, Prod]
   uses: ./.github/workflows/Deploy.yml
   with:
-   target_environment: ${{matrix.target}}   
+   target_environment: 'Dev'   
+   
+   
+ DeployToQA:
+  
+  needs: DeployToDev
+  strategy:
+   matrix:
+    target: [Dev, QA, Prod]
+  uses: ./.github/workflows/Deploy.yml
+  with:
+   target_environment: 'QA'
+   
+ DeployToProd:
+  
+  needs: DeployToQA
+  strategy:
+   matrix:
+    target: [Dev, QA, Prod]
+  uses: ./.github/workflows/Deploy.yml
+  with:
+   target_environment: 'Prod'
