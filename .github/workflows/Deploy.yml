@@ -9,24 +9,24 @@ on:
     
 jobs:
 
- #ReplaceTokens: 
+ ReplaceTokens: 
  
-  #uses: ./.github/workflows/ReplaceTokens.yml
-  #with:
-   #target_environment: ${{ inputs.target_environment }}
+  uses: ./.github/workflows/ReplaceTokens.yml
+  with:
+   target_environment: ${{ inputs.target_environment }}
    
- #UploadArtifacts:
+ UploadArtifacts:
   
-  #needs: ReplaceTokens
-  #runs-on: [self-hosted, windows, x64]
-  #steps:  
-   #- uses: actions/upload-artifact@v3.1.2
-    # with:
-     # name: artifacts
-      #path: MyArtifacts/
+  needs: ReplaceTokens
+  runs-on: [self-hosted, windows, x64]
+  steps:  
+   - uses: actions/upload-artifact@v3.1.2
+     with:
+      name: artifacts
+      path: MyArtifacts/
    
  Deploy:
- 
+  needs: UploadArtifacts
   runs-on: [self-hosted, windows, x64]
   environment: ${{ inputs.target_environment }}
   
