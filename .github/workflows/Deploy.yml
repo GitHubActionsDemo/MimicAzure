@@ -1,4 +1,47 @@
 name: Deploy
 
 on:
- workflow_call
+ workflow_call:
+  inputs:
+   target_environment:
+    required: true
+    type: string
+    
+jobs:
+
+ #ReplaceTokens:  
+  #uses: ./.github/workflows/ReplaceTokens.yml
+  #with:
+   #target_environment: ${{ inputs.target_environment }}
+   
+ Deploy:
+ 
+  runs-on: [self-hosted, windows, x64]
+  
+  steps:
+  
+  - name: Deploy To Dev
+    if: inputs.target_environment == 'Dev'
+    uses: actions/download-artifact@v3
+    with: 
+     name: artifacts
+     path: ${{vars.PATH}}
+     
+  - name: Deploy To QA
+    if: inputs.target_environment == 'QA'
+    uses: actions/download-artifact@v3
+    with: 
+     name: artifacts
+     path: ${{vars.PATH}}
+   
+  - name: Deploy To Prod
+    if: inputs.target_environment == 'Prod'
+    uses: actions/download-artifact@v3
+    with: 
+     name: artifacts
+     path: ${{vars.PATH}}
+ 
+  
+  
+  
+    
