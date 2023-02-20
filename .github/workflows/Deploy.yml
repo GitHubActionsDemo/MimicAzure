@@ -17,12 +17,13 @@ jobs:
  Deploy:
  
   runs-on: [self-hosted, windows, x64]
-  environment: ${{ inputs.target_environment }}
+  environment:
+   name: ${{ inputs.target_environment }}
   
   steps:
   
   - name: Deploy To Dev
-    if: environment == 'Dev'
+    if: environment.name == 'Dev'
     uses: actions/download-artifact@v3
     with: 
      name: artifacts
