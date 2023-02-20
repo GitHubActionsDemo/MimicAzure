@@ -32,4 +32,4 @@ jobs:
     with: 
      tokenPrefix: '{{'
      tokenSuffix: '}}'
-     files: 'MyArtifacts/'
+     files: 'MyArtifacts/*'
