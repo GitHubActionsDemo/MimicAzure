@@ -23,7 +23,7 @@ jobs:
   steps:
   
   - name: Deploy To Dev
-    if: environment.name == 'Dev'
+    if: inputs.target_environment == 'Dev'
     uses: actions/download-artifact@v3
     with: 
      name: artifacts
