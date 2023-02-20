@@ -1,1 +1,8 @@
 Hello there, this is artifact file number two
+Tokens:
+{{WelcomeMessage}}
+{{Name}}
+{{Age}}
+{{Status}}
+{{Profession}}
+{{University}}
