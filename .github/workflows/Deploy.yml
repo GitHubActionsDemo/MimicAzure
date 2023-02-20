@@ -17,8 +17,7 @@ jobs:
  Deploy:
  
   runs-on: [self-hosted, windows, x64]
-  environment:
-   name: ${{ inputs.target_environment }}
+  environment: ${{ inputs.target_environment }}
   
   steps:
   
