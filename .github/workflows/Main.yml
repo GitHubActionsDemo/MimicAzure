@@ -11,31 +11,25 @@ jobs:
   steps:
     - uses: actions/checkout@v3.3.0
     
-    
- UploadArtifacts:
-  
-  needs: CheckoutRepo
-  runs-on: [self-hosted, windows, x64]
-  steps:
-  
-   - shell: cmd 
-     run: mkdir Uploads
-      
-   - uses: actions/upload-artifact@v3.1.2
-     with:
-      name: artifacts
-      path: Uploads/
-
-    
  
  ReplaceTokens:
  
-  needs: UploadArtifacts
+  needs: CheckoutRepo
   uses: ./.github/workflows/ReplaceTokens.yml
   with:
    target_environment: 'Dev'
    
    
+ UploadArtifacts:
+  
+  needs: ReplaceTokens
+  runs-on: [self-hosted, windows, x64]
+  steps:  
+   - uses: actions/upload-artifact@v3.1.2
+     with:
+      name: artifacts
+      path: MyArtifacts/
+
 
  DeployToDev:
   
