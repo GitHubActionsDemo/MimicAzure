@@ -15,9 +15,12 @@ jobs:
  ReplaceTokens:
  
   needs: CheckoutRepo
+  strategy:
+   matrix:
+    target: [Dev, QA, Prod]
   uses: ./.github/workflows/ReplaceTokens.yml
   with:
-   target_environment: 'Dev'
+   target_environment: ${{matrix.target}}
    
    
  UploadArtifacts:
@@ -34,7 +37,9 @@ jobs:
  DeployToDev:
   
   needs: UploadArtifacts
+  strategy:
+   matrix:
+    target: [Dev, QA, Prod]
   uses: ./.github/workflows/Deploy.yml
   with:
-   target_environment: 'Dev'
-   
+   target_environment: ${{matrix.target}}   
