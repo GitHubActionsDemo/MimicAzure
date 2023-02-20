@@ -1,0 +1,40 @@
+name: Main
+
+on:
+ workflow_dispatch 
+ 
+jobs:
+
+ CheckoutRepo:
+ 
+  runs-on: [self-hosted, windows, x64]
+  steps:
+    - uses: actions/checkout@v3.3.0
+    
+    
+ UploadArtifacts:
+ 
+  runs-on: [self-hosted, windows, x64]
+  steps:
+   - uses: actions/upload-artifact@v3.1.2
+     with:
+      name: artifacts
+
+    
+ 
+ ReplaceTokens:
+ 
+  needs: CheckoutRepo 
+  uses: ./.github/workflows/ReplaceTokens.yml
+  with:
+   target_environment: 'Dev'
+   
+   
+
+ DeployToDev:
+  
+  needs: ReplaceTokens
+  uses: ./.github/workflows/Deploy.yml
+  with:
+   target_environment: 'Dev'
+   
