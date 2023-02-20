@@ -26,7 +26,7 @@ jobs:
       path: MyArtifacts/
    
  Deploy:
- 
+  needs: UploadArtifacts
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: ${{ inputs.target_environment }}
