@@ -1,0 +1,9 @@
+Hello there, this is artifact file number three
+Tokens:
+{{WelcomeMessage}}
+{{Name}}
+{{Age}}
+{{Status}}
+{{Profession}}
+{{University}}
+{{Phone}}
