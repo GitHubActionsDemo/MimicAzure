@@ -37,9 +37,6 @@ jobs:
  DeployToDev:
   
   needs: CheckoutRepo
-  strategy:
-   matrix:
-    target: [Dev, QA, Prod]
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: 'Dev'   
@@ -48,9 +45,6 @@ jobs:
  DeployToQA:
   
   needs: DeployToDev
-  strategy:
-   matrix:
-    target: [Dev, QA, Prod]
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: 'QA'
@@ -58,9 +52,6 @@ jobs:
  DeployToProd:
   
   needs: DeployToQA
-  strategy:
-   matrix:
-    target: [Dev, QA, Prod]
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: 'Prod'
