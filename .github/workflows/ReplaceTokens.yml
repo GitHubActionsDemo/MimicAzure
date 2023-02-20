@@ -21,8 +21,7 @@ jobs:
    Name: ${{vars.NAME}}
    Age: ${{vars.AGE}}
    Profession: ${{vars.PROFESSION}}
-   Phone: ${{secrets.PHONE}}
-  
+   
   steps:
   
   - name: Replace tokens
