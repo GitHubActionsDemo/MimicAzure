@@ -5,11 +5,11 @@ on:
  
 jobs:
 
- CheckoutRepo:
+ #CheckoutRepo:
  
-  runs-on: [self-hosted, windows, x64]
-  steps:
-    - uses: actions/checkout@v3.3.0
+  #runs-on: [self-hosted, windows, x64]
+  #steps:
+   # - uses: actions/checkout@v3.3.0
     
  
  #ReplaceTokens:
@@ -35,8 +35,7 @@ jobs:
 
 
  DeployToDev:
-  
-  needs: CheckoutRepo
+ 
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: 'Dev'   
