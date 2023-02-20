@@ -1,13 +1,25 @@
 name: Replace tokens
 
 on:
- workflow_call
+ workflow_call:
+  inputs:
+   target_environment:
+    required: true
+    type: string
 
+
+  
 jobs:
  
  ReplaceVariables:
 
   runs-on: [self-hosted, windows, x64]
+  environment: ${{ inputs.target_environment }}
+  
+  env: 
+   Name: ${{vars.NAME}}
+   Age: ${{vars.AGE}}
+   Profession: ${{vars.PROFESSION}}
   
   steps:
   
