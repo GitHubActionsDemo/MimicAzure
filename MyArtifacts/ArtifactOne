@@ -1,18 +1,8 @@
 Hello there, this artifact file number one
 Tokens:
+{{WelcomeMessage}}
 {{Name}}
 {{Age}}
 {{Status}}
 {{Profession}}
 {{University}}
-
-_Name_
-_Age_
-_Status_
-_Profession_
-_University_
-
-"${Name}"
-"${Age}"
-"${Profession}"
-"${Name}"
