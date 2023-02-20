@@ -12,31 +12,31 @@ jobs:
     - uses: actions/checkout@v3.3.0
     
  
- ReplaceTokens:
+ #ReplaceTokens:
  
-  needs: CheckoutRepo
-  strategy:
-   matrix:
-    target: [Dev, QA, Prod]
-  uses: ./.github/workflows/ReplaceTokens.yml
-  with:
-   target_environment: ${{matrix.target}}
+  #needs: CheckoutRepo
+  #strategy:
+   #matrix:
+    #target: [Dev, QA, Prod]
+  #uses: ./.github/workflows/ReplaceTokens.yml
+  #with:
+   #target_environment: ${{matrix.target}}
    
    
- UploadArtifacts:
+ #UploadArtifacts:
   
-  needs: ReplaceTokens
-  runs-on: [self-hosted, windows, x64]
-  steps:  
-   - uses: actions/upload-artifact@v3.1.2
-     with:
-      name: artifacts
-      path: MyArtifacts/
+  #needs: ReplaceTokens
+  #runs-on: [self-hosted, windows, x64]
+  #steps:  
+   #- uses: actions/upload-artifact@v3.1.2
+    # with:
+     # name: artifacts
+      #path: MyArtifacts/
 
 
  DeployToDev:
   
-  needs: UploadArtifacts
+  needs: CheckoutRepo
   strategy:
    matrix:
     target: [Dev, QA, Prod]
