@@ -9,21 +9,21 @@ on:
     
 jobs:
 
- ReplaceTokens: 
+ #ReplaceTokens: 
  
-  uses: ./.github/workflows/ReplaceTokens.yml
-  with:
-   target_environment: ${{ inputs.target_environment }}
+  #uses: ./.github/workflows/ReplaceTokens.yml
+  #with:
+   #target_environment: ${{ inputs.target_environment }}
    
- UploadArtifacts:
+ #UploadArtifacts:
   
-  needs: ReplaceTokens
-  runs-on: [self-hosted, windows, x64]
-  steps:  
-   - uses: actions/upload-artifact@v3.1.2
-     with:
-      name: artifacts
-      path: MyArtifacts/
+  #needs: ReplaceTokens
+  #runs-on: [self-hosted, windows, x64]
+  #steps:  
+   #- uses: actions/upload-artifact@v3.1.2
+    # with:
+     # name: artifacts
+      #path: MyArtifacts/
    
  Deploy:
  
@@ -38,11 +38,7 @@ jobs:
     with: 
      name: artifacts
      path: ${{ vars.PATH }}
-     
-  #- shell: cmd
-   # if: inputs.target_environment == 'Dev'
-    #run: echo "Environment is ${{ vars.Path }}"
- 
+  
   - name: Deploy To QA
     if: inputs.target_environment == 'QA'
     uses: actions/download-artifact@v3
