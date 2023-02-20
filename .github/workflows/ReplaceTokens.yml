@@ -11,7 +11,7 @@ on:
   
 jobs:
  
- ReplaceVariables:
+ ReplaceTokens:
 
   runs-on: [self-hosted, windows, x64]
   environment: ${{ inputs.target_environment }}
