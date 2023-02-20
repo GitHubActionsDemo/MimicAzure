@@ -33,7 +33,7 @@ jobs:
 
  DeployToDev:
   
-  needs: ReplaceTokens
+  needs: UploadArtifacts
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: 'Dev'
