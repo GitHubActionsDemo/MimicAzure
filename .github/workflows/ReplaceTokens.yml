@@ -21,8 +21,6 @@ jobs:
    Name: ${{vars.NAME}}
    Age: ${{vars.AGE}}
    Profession: ${{vars.PROFESSION}}
-   University: ${{vars.UNIVERSITY}}
-   if: inputs.target_environment == 'Prod'
    Phone: ${{secrets.PHONE}}
   
   steps:
