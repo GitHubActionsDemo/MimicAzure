@@ -5,14 +5,17 @@ on:
  
 jobs:
 
- ApprovalDev:
+ CheckoutRepo:
  
   runs-on: [self-hosted, windows, x64]
   environment: Dev
+  steps:
+    - uses: actions/checkout@v3.3.0
+   
   
 
  DeployToDev:
-  needs: ApprovalDev
+  needs: CheckoutRepo
   uses: ./.github/workflows/Dev.yml
   with:
    target_environment: 'Dev'
