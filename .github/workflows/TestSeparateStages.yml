@@ -8,14 +8,34 @@ jobs:
  CheckoutRepo:
  
   runs-on: [self-hosted, windows, x64]
-  environment: Dev
+  #environment: Dev
   steps:
     - uses: actions/checkout@v3.3.0
+    
+ ReplaceTokens:
+
+  runs-on: [self-hosted, windows, x64]
+  environment: Dev
+  
+  env: 
+   WelcomeMessage: ${{vars.WELCOMEMESSAGE}}
+   Name: ${{vars.NAME}}
+   Age: ${{vars.AGE}}
+   Profession: ${{vars.PROFESSION}}
+   
+  steps:
+  
+  - name: Replace tokens
+    uses: cschleiden/replace-tokens@v1.2
+    with: 
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: 'MyArtifacts/*'
    
   
 
  DeployToDev:
-  needs: CheckoutRepo
+  needs: ReplaceTokens
   uses: ./.github/workflows/Dev.yml
   with:
    target_environment: 'Dev'
