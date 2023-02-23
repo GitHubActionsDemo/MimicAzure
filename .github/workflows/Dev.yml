@@ -2,6 +2,10 @@ name: Dev
 
 on:
  workflow_call:
+  inputs:
+   target_environment:
+    required: true
+    type: string
   
 jobs:
 
@@ -9,4 +13,4 @@ jobs:
  
   uses: ./.github/workflows/Deploy.yml
   with:
-   target_environment: 'Dev'  
+   target_environment: ${{ inputs.target_environment }}  
