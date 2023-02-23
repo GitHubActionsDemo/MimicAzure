@@ -12,7 +12,7 @@ jobs:
   steps:
     - uses: actions/checkout@v3.3.0
     
- ReplaceTokens:
+ ReplaceDevTokens:
   needs: CheckoutRepo
 
   runs-on: [self-hosted, windows, x64]
@@ -33,21 +33,41 @@ jobs:
      tokenSuffix: '}}'
      files: 'MyArtifacts/*'
    
-  
 
  DeployToDev:
-  needs: ReplaceTokens
+  needs: ReplaceDevTokens
   uses: ./.github/workflows/Dev.yml
   with:
    target_environment: 'Dev'
+   
+ ReplaceQATokens:
+  needs: DeployToDev
+
+  runs-on: [self-hosted, windows, x64]
+  environment: QA
+  
+  env: 
+   WelcomeMessage: ${{vars.WELCOMEMESSAGE}}
+   Name: ${{vars.NAME}}
+   Age: ${{vars.AGE}}
+   Profession: ${{vars.PROFESSION}}
+   
+  steps:
+  
+  - name: Replace tokens
+    uses: cschleiden/replace-tokens@v1.2
+    with: 
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: 'MyArtifacts/*'
     
    
    
- #DeployToQA:
+ DeployToQA:
   
-  #needs: DeployToDev
-  #uses: ./.github/workflows/QA.yml
-  #with:
-   #target_environment: 'QA'
+  needs: ReplaceQATokens
+  uses: ./.github/workflows/QA.yml
+  with:
+   target_environment: 'QA'
   
    
