@@ -28,7 +28,7 @@ jobs:
  Deploy:
   needs: UploadArtifacts
   runs-on: [self-hosted, windows, x64]
-  environment: ${{ inputs.target_environment }}
+  #environment: ${{ inputs.target_environment }}
   
   steps:
   
@@ -37,7 +37,7 @@ jobs:
     uses: actions/download-artifact@v3
     with: 
      name: artifacts
-     path: ${{ vars.PATH }}
+     path: 'C:\Users\nourhan.obada\Environments\Dev'
   
   - name: Deploy To QA
     if: inputs.target_environment == 'QA'
