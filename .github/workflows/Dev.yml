@@ -1,11 +1,11 @@
 name: Dev
 
-#on:
- #workflow_call:
-  #inputs:
-   #target_environment:
-    #required: true
-    #type: string
+on:
+ workflow_call:
+  inputs:
+   target_environment:
+    required: true
+    type: string
   
 #jobs:
 
@@ -15,21 +15,12 @@ name: Dev
   #with:
    #target_environment: ${{ inputs.target_environment }}  
    
-on:
- workflow_dispatch 
+#on:
+ #workflow_dispatch 
  
 jobs:
-
- CheckoutRepo:
- 
-  runs-on: [self-hosted, windows, x64]
-  #environment: Dev
-  steps:
-    - uses: actions/checkout@v3.3.0
     
  ReplaceTokens:
-  needs: CheckoutRepo
-
   runs-on: [self-hosted, windows, x64]
   environment: Dev
   
