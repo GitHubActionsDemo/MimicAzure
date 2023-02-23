@@ -1,7 +1,11 @@
 name: QA
 
 on:
- workflow_call 
+ workflow_call:
+  inputs:
+   target_environment:
+    required: true
+    type: string
  
 jobs:
 
