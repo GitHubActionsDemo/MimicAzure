@@ -5,19 +5,25 @@ on:
  
 jobs:
 
- DeployToDev:
+ ApprovalDev:
+ 
+  runs-on: [self-hosted, windows, x64]
+  environment: Dev
+  
 
+ DeployToDev:
+  needs: ApprovalDev
   uses: ./.github/workflows/Dev.yml
   with:
    target_environment: 'Dev'
     
    
    
- DeployToQA:
+ #DeployToQA:
   
-  needs: DeployToDev
-  uses: ./.github/workflows/QA.yml
-  with:
-   target_environment: 'QA'
+  #needs: DeployToDev
+  #uses: ./.github/workflows/QA.yml
+  #with:
+   #target_environment: 'QA'
   
    
