@@ -9,15 +9,8 @@ on:
     
 jobs:
 
- CheckoutRepo:
- 
-  runs-on: [self-hosted, windows, x64]
-  steps:
-    - uses: actions/checkout@v3.3.0
-
  ReplaceTokens: 
  
-  needs: CheckoutRepo
   uses: ./.github/workflows/ReplaceTokens.yml
   with:
    target_environment: ${{ inputs.target_environment }}
