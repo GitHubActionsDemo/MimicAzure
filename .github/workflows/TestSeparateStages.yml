@@ -8,6 +8,8 @@ jobs:
  DeployToDev:
 
   uses: ./.github/workflows/Dev.yml
+  with:
+   target_environment: 'Dev'
     
    
    
@@ -15,5 +17,7 @@ jobs:
   
   needs: DeployToDev
   uses: ./.github/workflows/QA.yml
+  with:
+   target_environment: 'QA'
   
    
