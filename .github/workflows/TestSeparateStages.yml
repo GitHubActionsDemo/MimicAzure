@@ -6,16 +6,14 @@ on:
 jobs:
 
  DeployToDev:
- 
+
   uses: ./.github/workflows/Dev.yml
-  with:
-   target_environment: 'Dev'   
+    
    
    
  DeployToQA:
   
   needs: DeployToDev
   uses: ./.github/workflows/QA.yml
-  with:
-   target_environment: 'QA'
+  
    
