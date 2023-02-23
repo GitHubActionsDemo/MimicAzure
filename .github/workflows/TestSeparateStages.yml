@@ -13,6 +13,7 @@ jobs:
     - uses: actions/checkout@v3.3.0
     
  ReplaceTokens:
+  needs: CheckoutRepo
 
   runs-on: [self-hosted, windows, x64]
   environment: Dev
