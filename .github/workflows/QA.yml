@@ -9,8 +9,29 @@ on:
  
 jobs:
 
+ ReplaceTokens:
+  
+  runs-on: [self-hosted, windows, x64]
+  environment: QA
+  
+  env: 
+   WelcomeMessage: ${{vars.WELCOMEMESSAGE}}
+   Name: ${{vars.NAME}}
+   Age: ${{vars.AGE}}
+   Profession: ${{vars.PROFESSION}}
+   
+  steps:
+  
+  - name: Replace tokens
+    uses: cschleiden/replace-tokens@v1.2
+    with: 
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: 'MyArtifacts/*'
+
  DeployToQA:
  
+  needs: ReplaceTokens
   uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: ${{inputs.target_environment}}
