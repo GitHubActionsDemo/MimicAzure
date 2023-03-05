@@ -9,15 +9,8 @@ on:
     
 jobs:
 
- #ReplaceTokens: 
- 
-  #uses: ./.github/workflows/ReplaceTokens.yml
-  #with:
-   #target_environment: ${{ inputs.target_environment }}
-   
  UploadArtifacts:
-  
- #needs: ReplaceTokens
+ 
   runs-on: [self-hosted, windows, x64]
   steps:  
    - uses: actions/upload-artifact@v3.1.2
@@ -28,7 +21,6 @@ jobs:
  Deploy:
   needs: UploadArtifacts
   runs-on: [self-hosted, windows, x64]
-  #environment: ${{ inputs.target_environment }}
   
   steps:
   
@@ -51,7 +43,7 @@ jobs:
     uses: actions/download-artifact@v3
     with: 
      name: artifacts
-     path: ${{ vars.PATH }}
+     path: 'C:\Users\nourhan.obada\Environments\Prod'
  
   
   
