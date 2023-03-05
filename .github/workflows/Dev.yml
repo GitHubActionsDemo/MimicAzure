@@ -6,17 +6,6 @@ on:
    target_environment:
     required: true
     type: string
-  
-#jobs:
-
- #DeployToDev:
- 
-  #uses: ./.github/workflows/Deploy.yml
-  #with:
-   #target_environment: ${{ inputs.target_environment }}  
-   
-#on:
- #workflow_dispatch 
  
 jobs:
     
