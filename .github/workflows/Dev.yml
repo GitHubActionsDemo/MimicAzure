@@ -6,38 +6,38 @@ on:
 jobs:
 
  ReplaceTokens:
-  uses: ./.github/workflows/TaskGroups/ReplaceTokens.yml
+  uses: ./.github/workflows/ReplaceTokens.yml
   with:
    target_environment: 'Dev'
    
  StopAppService:
   needs: ReplaceTokens
-  uses: ./.github/workflows/TaskGroups/StopAppService.yml
+  uses: ./.github/workflows/StopAppService.yml
   with:
-   ResourceGroupName: 
-   AppService:
+   ResourceGroupName: ''
+   AppService: ''
   
  DeployToDev: #handles the copy tasks
   needs: StopAppService
-  uses: ./.github/workflows/TaskGroups/Deploy.yml
+  uses: ./.github/workflows/Deploy.yml
   with:
    target_environment: 'Dev'
    
  StartAppService:
   needs: DeployToDev
-  uses: ./.github/workflows/TaskGroups/StartAppService.yml
+  uses: ./.github/workflows/StartAppService.yml
   with:
-   ResourceGroupName: 
-   AppService:
+   ResourceGroupName: ''
+   AppService: ''
    
  #Webdeploy script
    
  DacpacDeployment:
   needs: StartAppService
-  uses: ./.github/workflows/TaskGroups/DacpacDeployment.yml
+  uses: ./.github/workflows/DacpacDeployment.yml
   with:
-   SQLServer:
-   ConnectionString:
-   DacpacPackagePath:   
+   SQLServer: ''
+   ConnectionString: ''
+   DacpacPackagePath: ''  
  
   
