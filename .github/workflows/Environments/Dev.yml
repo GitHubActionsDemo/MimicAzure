@@ -17,8 +17,7 @@ jobs:
    ResourceGroupName: 
    AppService:
   
-
- DeployToDev:
+ DeployToDev: #handles the copy tasks
   needs: StopAppService
   uses: ./.github/workflows/TaskGroups/Deploy.yml
   with:
@@ -31,13 +30,14 @@ jobs:
    ResourceGroupName: 
    AppService:
    
+ #Webdeploy script
+   
  DacpacDeployment:
   needs: StartAppService
   uses: ./.github/workflows/TaskGroups/DacpacDeployment.yml
   with:
    SQLServer:
    ConnectionString:
-   DacpacPackagePath:
-   
+   DacpacPackagePath:   
  
   
