@@ -1,37 +1,24 @@
 name: QA
 
 on:
- workflow_call:
-  inputs:
-   target_environment:
-    required: true
-    type: string
+ workflow_call
+ 
+jobs:
+
+ on:
+ workflow_call
  
 jobs:
 
  ReplaceTokens:
+  uses: ./.github/workflows/TaskGroups/ReplaceTokens.yml
+  with:
+   target_environment: 'QA'
   
-  runs-on: [self-hosted, windows, x64]
-  environment: QA
-  
-  env: 
-   WelcomeMessage: ${{vars.WELCOMEMESSAGE}}
-   Name: ${{vars.NAME}}
-   Age: ${{vars.AGE}}
-   Profession: ${{vars.PROFESSION}}
-   
-  steps:
-  
-  - name: Replace tokens
-    uses: cschleiden/replace-tokens@v1.2
-    with: 
-     tokenPrefix: '{{'
-     tokenSuffix: '}}'
-     files: 'MyArtifacts/*'
 
- DeployToQA:
- 
+ DeployToDev:
   needs: ReplaceTokens
   uses: ./.github/workflows/Deploy.yml
   with:
-   target_environment: ${{inputs.target_environment}}
+   target_environment: 'QA'
+  
