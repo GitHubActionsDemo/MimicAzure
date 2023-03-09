@@ -9,32 +9,11 @@ jobs:
   uses: ./.github/workflows/TaskGroups/ReplaceTokens.yml
   with:
    target_environment: 'Dev'
-   
- UploadArtifacts:
- 
-  runs-on: [self-hosted, windows, x64]
-  steps:  
-   - uses: actions/upload-artifact@v3.1.2
-     with:
-      name: artifacts
-      path: MyArtifacts/
-   
- Deploy:
-  needs: UploadArtifacts
-  runs-on: [self-hosted, windows, x64]
-  
-  steps:
-  
-  - name: Deploy To Dev
-    uses: actions/download-artifact@v3
-    with: 
-     name: artifacts
-     path: 'C:\Users\nourhan.obada\Environments\Dev'
   
 
- #DeployToDev:
-  #needs: ReplaceTokens
-  #uses: ./.github/workflows/Deploy.yml
-  #with:
-   #target_environment: 'Dev'
+ DeployToDev:
+  needs: ReplaceTokens
+  uses: ./.github/workflows/Deploy.yml
+  with:
+   target_environment: 'Dev'
   
