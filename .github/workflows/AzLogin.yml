@@ -12,8 +12,9 @@ on:
 jobs:
   AZLogin:
     runs-on: [self-hosted, windows, x64]
-  
+    
+    steps:
     - uses: azure/login@v1
       with:
         creds: ${{ inputs.AzureCredentials }}
-        environment: 'AzureStack'
+        #environment: 'AzureStack'
