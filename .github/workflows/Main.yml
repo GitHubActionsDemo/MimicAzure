@@ -26,9 +26,9 @@ jobs:
   with:
    target_environment: 'QA'
    
- DeployToProd:
+ #DeployToProd:
   
-  needs: CheckoutRepo
-  uses: ./.github/workflows/Prod.yml
-  with:
-   target_environment: 'Prod'
+  #needs: CheckoutRepo
+  #uses: ./.github/workflows/Prod.yml
+  #with:
+   #target_environment: 'Prod'
