@@ -1,37 +1,40 @@
 name: Dev
 
 on:
- workflow_call:
-  inputs:
-   target_environment:
-    required: true
-    type: string
+ workflow_call
  
 jobs:
-    
- ReplaceTokens:
-  runs-on: [self-hosted, windows, x64]
-  environment: Dev
-  
-  env: 
-   WelcomeMessage: ${{vars.WELCOMEMESSAGE}}
-   Name: ${{vars.NAME}}
-   Age: ${{vars.AGE}}
-   Profession: ${{vars.PROFESSION}}
-   
-  steps:
-  
-  - name: Replace tokens
-    uses: cschleiden/replace-tokens@v1.2
-    with: 
-     tokenPrefix: '{{'
-     tokenSuffix: '}}'
-     files: 'MyArtifacts/*'
-   
 
- DeployToDev:
-  needs: ReplaceTokens
-  uses: ./.github/workflows/Deploy.yml
+ ReplaceTokens:
+  uses: ./.github/workflows/TaskGroups/ReplaceTokens.yml
   with:
    target_environment: 'Dev'
+   
+ UploadArtifacts:
+ 
+  runs-on: [self-hosted, windows, x64]
+  steps:  
+   - uses: actions/upload-artifact@v3.1.2
+     with:
+      name: artifacts
+      path: MyArtifacts/
+   
+ Deploy:
+  needs: UploadArtifacts
+  runs-on: [self-hosted, windows, x64]
+  
+  steps:
+  
+  - name: Deploy To Dev
+    uses: actions/download-artifact@v3
+    with: 
+     name: artifacts
+     path: 'C:\Users\nourhan.obada\Environments\Dev'
+  
+
+ #DeployToDev:
+  #needs: ReplaceTokens
+  #uses: ./.github/workflows/Deploy.yml
+  #with:
+   #target_environment: 'Dev'
   
