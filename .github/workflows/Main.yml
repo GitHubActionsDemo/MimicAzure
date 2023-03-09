@@ -5,52 +5,30 @@ on:
  
 jobs:
 
- #CheckoutRepo:
+ CheckoutRepo:
  
-  #runs-on: [self-hosted, windows, x64]
-  #steps:
-   # - uses: actions/checkout@v3.3.0
+  runs-on: [self-hosted, windows, x64]
+  steps:
+    - uses: actions/checkout@v3.3.0
     
  
- #ReplaceTokens:
- 
-  #needs: CheckoutRepo
-  #strategy:
-   #matrix:
-    #target: [Dev, QA, Prod]
-  #uses: ./.github/workflows/ReplaceTokens.yml
-  #with:
-   #target_environment: ${{matrix.target}}
-   
-   
- #UploadArtifacts:
-  
-  #needs: ReplaceTokens
-  #runs-on: [self-hosted, windows, x64]
-  #steps:  
-   #- uses: actions/upload-artifact@v3.1.2
-    # with:
-     # name: artifacts
-      #path: MyArtifacts/
-
-
  DeployToDev:
- 
-  uses: ./.github/workflows/Deploy.yml
+  needs: CheckoutRepo
+  uses: ./.github/workflows/Dev.yml
   with:
-   target_environment: 'Dev'   
-   
+   target_environment: 'Dev'
+    
    
  DeployToQA:
   
-  needs: DeployToDev
-  uses: ./.github/workflows/Deploy.yml
+  needs: CheckoutRepo
+  uses: ./.github/workflows/QA.yml
   with:
    target_environment: 'QA'
    
  DeployToProd:
   
-  needs: DeployToQA
-  uses: ./.github/workflows/Deploy.yml
+  needs: CheckoutRepo
+  uses: ./.github/workflows/Prod.yml
   with:
    target_environment: 'Prod'
