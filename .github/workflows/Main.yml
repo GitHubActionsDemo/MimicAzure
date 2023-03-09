@@ -6,7 +6,6 @@ on:
 jobs:
 
  CheckoutRepo:
- 
   runs-on: [self-hosted, windows, x64]
   steps:
     - uses: actions/checkout@v3.3.0
@@ -15,16 +14,12 @@ jobs:
  DeployToDev:
   needs: CheckoutRepo
   uses: ./.github/workflows/Dev.yml
-  with:
-   target_environment: 'Dev'
-    
-   
+ 
+      
  DeployToQA:
-  
   needs: CheckoutRepo
   uses: ./.github/workflows/QA.yml
-  with:
-   target_environment: 'QA'
+ 
    
  #DeployToProd:
   
