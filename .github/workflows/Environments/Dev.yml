@@ -9,11 +9,35 @@ jobs:
   uses: ./.github/workflows/TaskGroups/ReplaceTokens.yml
   with:
    target_environment: 'Dev'
+   
+ StopAppService:
+  needs: ReplaceTokens
+  uses: ./.github/workflows/TaskGroups/StopAppService.yml
+  with:
+   ResourceGroupName: 
+   AppService:
   
 
  DeployToDev:
-  needs: ReplaceTokens
+  needs: StopAppService
   uses: ./.github/workflows/TaskGroups/Deploy.yml
   with:
    target_environment: 'Dev'
+   
+ StartAppService:
+  needs: DeployToDev
+  uses: ./.github/workflows/TaskGroups/StartAppService.yml
+  with:
+   ResourceGroupName: 
+   AppService:
+   
+ DacpacDeployment:
+  needs: StartAppService
+  uses: ./.github/workflows/TaskGroups/DacpacDeployment.yml
+  with:
+   SQLServer:
+   ConnectionString:
+   DacpacPackagePath:
+   
+ 
   
