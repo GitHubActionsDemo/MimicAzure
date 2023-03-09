@@ -13,7 +13,7 @@ jobs:
 
  DeployToDev:
   needs: ReplaceTokens
-  uses: ./.github/workflows/Deploy.yml
+  uses: ./.github/workflows/TaskGroups/Deploy.yml
   with:
    target_environment: 'Dev'
   
