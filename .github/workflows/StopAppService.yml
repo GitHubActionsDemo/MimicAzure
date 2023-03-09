@@ -15,7 +15,6 @@ on:
 jobs:
  Stop:
    runs-on: self-hosted
-   needs: build
    steps:
       - name: Stop Service
         shell: powershell
