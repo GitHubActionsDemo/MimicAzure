@@ -14,7 +14,7 @@ jobs:
  
  DeployToDev:
   needs: CheckoutRepo
-  uses: ./.github/workflows/Dev.yml
+  uses: ./.github/workflows/Environments/Dev.yml
   with:
    target_environment: 'Dev'
     
@@ -22,13 +22,13 @@ jobs:
  DeployToQA:
   
   needs: CheckoutRepo
-  uses: ./.github/workflows/QA.yml
+  uses: ./.github/workflows/Environments/QA.yml
   with:
    target_environment: 'QA'
    
  DeployToProd:
   
   needs: CheckoutRepo
-  uses: ./.github/workflows/Prod.yml
+  uses: ./.github/workflows/Environments/Prod.yml
   with:
    target_environment: 'Prod'
