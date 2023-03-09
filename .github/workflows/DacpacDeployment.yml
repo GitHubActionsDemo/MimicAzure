@@ -19,7 +19,8 @@ on:
 jobs:
   DacpacDeployment:
     runs-on: [self-hosted, windows, x64]
-  
+    
+    steps:
     - name: Azure SQL Deploy (dacpac, file, folder)
       # You may pin to the exact commit or the version.
       #uses: XLipcak/sql-action@1b2b1ea66beb232831e97be2be8382be8f006840
