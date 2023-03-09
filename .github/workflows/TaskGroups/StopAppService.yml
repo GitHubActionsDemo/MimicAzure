@@ -3,7 +3,6 @@ name: Stop App Service
 on:
  workflow_call:
   inputs:
-  
    ResourceGroupName:
     required: true
     type: string
