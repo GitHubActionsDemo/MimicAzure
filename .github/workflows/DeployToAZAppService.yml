@@ -1,0 +1,30 @@
+name: Deploy to Azure App Service
+
+on:
+ workflow_call:
+  inputs:
+  
+   AppServiceName:
+    required: true
+    type: string
+    
+   publish-profile:
+    required: true
+    type: string
+    
+   packagePath:
+    required: true
+    type: string
+   
+  
+jobs:
+  DeployToAzure:
+    runs-on: [self-hosted, windows, x64]
+  
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ inputs.AppServiceName }}
+        publish-profile: ${{ inputs.publish-profile }}
+        package: ${{ inputs.packagePath }}
