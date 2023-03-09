@@ -1,0 +1,19 @@
+name: Azure Login
+
+on:
+ workflow_call:
+  inputs:
+  
+   AzureCredentials:
+    required: true
+    type: string
+
+  
+jobs:
+  AZLogin:
+    runs-on: [self-hosted, windows, x64]
+  
+    - uses: azure/login@v1
+      with:
+        creds: ${{ inputs.AzureCredentials }}
+        environment: 'AzureStack'
