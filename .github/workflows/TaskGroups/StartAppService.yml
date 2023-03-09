@@ -1,0 +1,24 @@
+name: Start App Service
+
+on:
+ workflow_call:
+  inputs:
+  
+   ResourceGroupName:
+    required: true
+    type: string
+    
+   AppService:
+    required: true
+    type: string
+
+  
+jobs:
+ Stop:
+   runs-on: self-hosted
+   needs: build
+   steps:
+      - name: Stop Service
+        shell: powershell
+        run: |
+            Start-AzWebApp -ResourceGroupName "${{ inputs.ResourceGroupName }}" -Name "${{ inputs.AppService }}"
