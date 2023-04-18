@@ -1,0 +1,105 @@
+name: Release
+
+on: 
+ workflow_dispatch
+ 
+jobs:
+ 
+ ReplaceTokens:
+  
+  runs-on: [self-hosted, windows, x64]
+  environment: Dev
+  
+  env: 
+   WelcomeMessage: ${{vars.WELCOMEMESSAGE}}
+   Name: ${{vars.NAME}}
+   Age: ${{vars.AGE}}
+   Profession: ${{vars.PROFESSION}}
+   
+  steps:
+  
+  - name: Replace tokens
+    uses: cschleiden/replace-tokens@v1.2
+    with: 
+     tokenPrefix: '{{'
+     tokenSuffix: '}}'
+     files: 'MyArtifacts/*'
+     
+ StopService:
+  needs: ReplaceTokens
+  runs-on: [self-hosted, windows, x64]
+  steps:
+      - name: Stop Service
+        shell: powershell
+        run: |
+            Stop-AzWebApp -ResourceGroupName "${{ ResourceGroupName }}" -Name "${{ AppService }}"
+            
+            
+ StopIIS:
+  needs: StopService
+  runs-on: [self-hosted, windows, x64]
+  steps:
+      - name: Stop IIS
+        shell: powershell
+        run: |
+            iisreset /stop "${{Server.IP}}"
+ 
+ UploadArtifacts:
+  needs: StopIIS
+  runs-on: [self-hosted, windows, x64]
+  steps:  
+   - uses: actions/upload-artifact@v3.1.2
+     with:
+      name: artifacts
+      path: MyArtifacts/
+   
+ CopyToPath:
+  needs: UploadArtifacts
+  runs-on: [self-hosted, windows, x64]
+  
+  steps:
+  
+  - name: Deploy To Dev
+    uses: actions/download-artifact@v3
+    with: 
+     name: artifacts
+     path: 'C:\Users\....\Environments\Dev'
+     
+ StartService:
+  needs: CopyToPath
+  runs-on: [self-hosted, windows, x64]
+  steps:
+      - name: Start Service
+        shell: powershell
+        run: |
+            Start-AzWebApp -ResourceGroupName "${{ ResourceGroupName }}" -Name "${{ AppService }}"
+            
+ StartIIS:
+  needs: StartService
+  runs-on: [self-hosted, windows, x64]
+  steps:
+      - name: Start IIS
+        shell: powershell
+        run: |
+            iisreset /start "${{Server.IP}}"
+            
+            
+ Webdeploy:
+  needs: StartIIS
+  runs-on: [self-hosted, windows, x64]
+  steps:
+      - shell: powershell
+        run: |
+            C:\LocalPublishWebDeploy\LocalPublishWebDeploy.ps1  -PackagePath "${{Path}}"
+            
+ DacPacDeployment:
+  needs: Webdeploy
+  runs-on: [self-hosted, windows, x64]
+  steps:
+    - name: Azure SQL Deploy (dacpac, file, folder)
+      uses: XLipcak/sql-action@v1.0.5
+      with:
+          server-name: $ {{ SQLServer }}
+          connection-string: $ {{ ConnectionString }}
+          dacpac-package: $$ {{ DacpacPackagePath }}
+         
