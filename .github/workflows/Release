@@ -5,6 +5,15 @@ on:
  
 jobs:
  
+ #Azure Login     
+AzureLogin:
+    - name: Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        #environment: 'AzureStack'
+        
+ #This task to replace our variables
  ReplaceTokens:
   
   runs-on: [self-hosted, windows, x64]
@@ -25,6 +34,7 @@ jobs:
      tokenSuffix: '}}'
      files: 'MyArtifacts/*'
      
+#Stop needed Sitecoe services     
  StopService:
   needs: ReplaceTokens
   runs-on: [self-hosted, windows, x64]
@@ -35,17 +45,9 @@ jobs:
             Stop-AzWebApp -ResourceGroupName "${{ ResourceGroupName }}" -Name "${{ AppService }}"
             
             
- StopIIS:
-  needs: StopService
-  runs-on: [self-hosted, windows, x64]
-  steps:
-      - name: Stop IIS
-        shell: powershell
-        run: |
-            iisreset /stop "${{Server.IP}}"
- 
+ #Upload DoZen Artifacts
  UploadArtifacts:
-  needs: StopIIS
+  needs: StopService
   runs-on: [self-hosted, windows, x64]
   steps:  
    - uses: actions/upload-artifact@v3.1.2
@@ -53,6 +55,7 @@ jobs:
       name: artifacts
       path: MyArtifacts/
    
+#Copy Artifacts   
  CopyToPath:
   needs: UploadArtifacts
   runs-on: [self-hosted, windows, x64]
@@ -64,7 +67,8 @@ jobs:
     with: 
      name: artifacts
      path: 'C:\Users\....\Environments\Dev'
-     
+ 
+ #Start services
  StartService:
   needs: CopyToPath
   runs-on: [self-hosted, windows, x64]
@@ -74,24 +78,16 @@ jobs:
         run: |
             Start-AzWebApp -ResourceGroupName "${{ ResourceGroupName }}" -Name "${{ AppService }}"
             
- StartIIS:
-  needs: StartService
-  runs-on: [self-hosted, windows, x64]
-  steps:
-      - name: Start IIS
-        shell: powershell
-        run: |
-            iisreset /start "${{Server.IP}}"
-            
-            
+ #Deploy Sitecore Content items using Webdeploy     
  Webdeploy:
-  needs: StartIIS
+  needs: StartService
   runs-on: [self-hosted, windows, x64]
   steps:
       - shell: powershell
         run: |
             C:\LocalPublishWebDeploy\LocalPublishWebDeploy.ps1  -PackagePath "${{Path}}"
             
+ #Deploy DoZen Custom DBs
  DacPacDeployment:
   needs: Webdeploy
   runs-on: [self-hosted, windows, x64]
@@ -103,3 +99,12 @@ jobs:
           connection-string: $ {{ ConnectionString }}
           dacpac-package: $$ {{ DacpacPackagePath }}
          
+#Deploy DoZen artifacts to App Services
+DeployToAppService:
+  - name: Deploy to Azure Web App
+    id: deploy-to-webapp
+    uses: azure/webapps-deploy@v2
+    with:
+        app-name: RTXTest
+        publish-profile: ${{ secrets.RTXTEST_PUBLISHPROFILE }}
+        package: C:\DoZen-PKG\Latest\DoZen-Core\dozen\deploy\platform
